@@ -6,16 +6,14 @@ import userRoute from "./user.route";
 import testRoute from "./test.route";
 
 const route = (app: Express) => {
-  // app.use("/test", (req, res, next) => {
-  //   res.json({"a": "aaanvb"})
-  // });
+  app.use("/hihi", (req, res, next) => {
+    res.json({ a: "aaanvb" });
+  });
   app.use("/auth", authRoute);
 
   app.use("/user", userRoute);
 
   app.use("/tests", testRoute);
-
-
 
   app.all("*", (req: Request, res: Response, next: NextFunction) => {
     next(Errors.NotFound);
