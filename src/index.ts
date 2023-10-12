@@ -18,12 +18,12 @@ declare global {
 
 const PORT = process.env.PORT || 3000;
 
-// const connect = async () => {
-//   if (!AppDataSource.isInitialized) await AppDataSource.initialize();
-//   console.log("connect to database done!!!");
-// };
+const connect = async () => {
+  if (!AppDataSource.isInitialized) await AppDataSource.initialize();
+  console.log("connect to database done!!!");
+};
 
-// connect();
+connect();
 
 const app: Express = express();
 
