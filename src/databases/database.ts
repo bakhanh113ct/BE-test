@@ -12,11 +12,11 @@ import { config } from "dotenv";
 
 export const AppDataSource = new DataSource({
   type: "postgres",
-  host: process.env.DATABASE_HOST,
+  host: 'dpg-ckju62pjrl0c73fq6pj0-a.singapore-postgres.render.com',
   port: 5432,
-  username: process.env.DATABASE_USERNAME,
-  password: process.env.DATABASE_PASSWORD,
-  database: process.env.DATABASE_NAME,
+  username: 'eztoeic_user',
+  password: 'fLVFqX9xzNaifgQbx8opNoEILPCrKOwf',
+  database: 'eztoeic',
   synchronize: true,
   logging: true,
   entities: [
