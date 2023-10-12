@@ -1,0 +1,44 @@
+import {
+  Entity,
+  PrimaryGeneratedColumn,
+  Column,
+  BaseEntity,
+  OneToMany,
+  ManyToOne,
+} from "typeorm";
+import { User } from "./auth.model";
+import { Test } from "./test.model";
+import { ResultDetail } from "./resultDetail.model";
+
+@Entity()
+export class Result extends BaseEntity {
+  @PrimaryGeneratedColumn()
+  id: number;
+
+  @Column()
+  state: string;
+
+  @Column()
+  score: string;
+
+  @Column()
+  time: string;
+
+  @Column()
+  dateComplete: Date;
+
+  @Column()
+  createdAt: Date;
+
+  @Column()
+  updatedAt: Date;
+
+  @ManyToOne((type) => User, (user) => user.results)
+  user: User;
+
+  @ManyToOne((type) => Test, (test) => test.results)
+  test: Test;
+
+  @OneToMany((type) => ResultDetail, (test) => test.result)
+  resultDetails: ResultDetail[];
+}
