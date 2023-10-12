@@ -1,7 +1,7 @@
 import jwt from "jsonwebtoken";
 import dotenv from "dotenv";
 import { User } from "../models/auth.model";
-import { client } from "../configs/redis";
+// import { client } from "../configs/redis";
 import { NextFunction, Request, Response } from "express";
 import { Errors } from "../helpers/error";
 
@@ -41,13 +41,13 @@ const signRefreshToken = async (user: User) => {
         if (err) {
           return reject(err);
         }
-        await client
-          .set(user.email, token!, {
-            EX: 365 * 24 * 60 * 60,
-          })
-          .catch((err) => {
-            reject(err);
-          });
+        // await client
+        //   .set(user.email, token!, {
+        //     EX: 365 * 24 * 60 * 60,
+        //   })
+        //   .catch((err) => {
+        //     reject(err);
+        //   });
         resolve(token);
       }
     );
@@ -102,15 +102,15 @@ const verifyRefreshToken = (refreshToken: string) => {
         }
 
         // Get RK from redis
-        const RK = await client.get(payload.user.mail);
-        if (RK === null) {
-          // reject(createError.NotAcceptable('Our system does not have your refresh token'));
-          return reject(Errors.Unauthorized);
-        }
-        if (RK !== refreshToken) {
-          // reject(createError.Unauthorized('Invalid refresh token'));
-          return reject(Errors.Unauthorized);
-        }
+        // const RK = await client.get(payload.user.mail);
+        // if (RK === null) {
+        //   // reject(createError.NotAcceptable('Our system does not have your refresh token'));
+        //   return reject(Errors.Unauthorized);
+        // }
+        // if (RK !== refreshToken) {
+        //   // reject(createError.Unauthorized('Invalid refresh token'));
+        //   return reject(Errors.Unauthorized);
+        // }
 
         resolve(payload);
       }
