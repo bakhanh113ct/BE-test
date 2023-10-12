@@ -10,13 +10,15 @@ import { Question } from "../models/question.model";
 import { ResultDetail } from "../models/resultDetail.model";
 import { config } from "dotenv";
 
+config();
+
 export const AppDataSource = new DataSource({
   type: "postgres",
-  host: 'dpg-ckju62pjrl0c73fq6pj0-a.singapore-postgres.render.com',
-  port: 5432,
-  username: 'eztoeic_user',
-  password: 'fLVFqX9xzNaifgQbx8opNoEILPCrKOwf',
-  database: 'eztoeic',
+  host: process.env.DATABASE_HOST,
+  port: Number(process.env.DATABASE_PORT),
+  username: process.env.DATABASE_USERNAME,
+  password: process.env.DATABASE_PASSWORD,
+  database: process.env.DATABASE_NAME,
   synchronize: true,
   logging: true,
   entities: [
