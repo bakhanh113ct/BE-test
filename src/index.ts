@@ -18,13 +18,12 @@ declare global {
 
 const PORT = process.env.PORT || 3000;
 
+console.log(process.env.DATABASE_USERNAME);
+
 const connect = async () => {
   if (!AppDataSource.isInitialized) await AppDataSource.initialize();
   console.log("connect to database done!!!");
 };
-
-
-
 
 connect();
 

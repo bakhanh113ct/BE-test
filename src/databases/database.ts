@@ -8,12 +8,12 @@ import { Part } from "../models/part.model";
 import { PartDetail } from "../models/partDetail.model";
 import { Question } from "../models/question.model";
 import { ResultDetail } from "../models/resultDetail.model";
-import {config} from 'dotenv';
+import { config } from "dotenv";
 
 export const AppDataSource = new DataSource({
   type: "postgres",
   host: process.env.DATABASE_HOST,
-  port: Number(process.env.DATABASE_PORT),
+  port: 5432,
   username: process.env.DATABASE_USERNAME,
   password: process.env.DATABASE_PASSWORD,
   database: process.env.DATABASE_NAME,
@@ -31,5 +31,5 @@ export const AppDataSource = new DataSource({
   ],
   subscribers: [],
   migrations: [],
-  ssl: false,
+  ssl: true,
 });
