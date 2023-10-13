@@ -6,6 +6,13 @@ import { ResultDetail } from "../models/resultDetail.model";
 import { Result } from "../models/result.model";
 import { User } from "../models/auth.model";
 
+const getAllTest = async (req: Request, res: Response, next: NextFunction) => {
+  const tests = await Test.find();
+
+  console.log(tests);
+  return res.json(tests);
+};
+
 const getTestById = async (req: Request, res: Response, next: NextFunction) => {
   const test = await Test.findOneBy({ id: Number(req.params.testId) });
   const testPart = await PartDetail.find({
@@ -115,21 +122,37 @@ const submitTest = async (req: Request, res: Response, next: NextFunction) => {
 
   await result.save();
 
+  var questionCorrectCount = 0;
+
   questions.map(async (value, index) => {
     const resultDetail = ResultDetail.create({
-      answerByUser: params[value.index],
+      answerByUser: params[value.index] ?? null,
       isCorrect: params[value.index] == value.answer ? true : false,
       createdAt: new Date(),
       updatedAt: new Date(),
     });
 
     resultDetail.question = value;
+
+    questionCorrectCount += resultDetail.isCorrect ? 1 : 0;
+
     resultDetail.result = result;
 
     await resultDetail.save();
   });
 
-  return res.json("test");
+  result.score = questionCorrectCount.toString();
+  await result.save();
+
+  const { user: _, test: __, createdAt: ___, updatedAt: ____, ...rs } = result;
+
+  return res.json(rs);
 };
 
-export { getTestById, getSolutionsById, getPartSolutionsById, submitTest };
+export {
+  getTestById,
+  getSolutionsById,
+  getPartSolutionsById,
+  submitTest,
+  getAllTest,
+};
