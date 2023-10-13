@@ -31,8 +31,8 @@ const signUp = async (req: Request, res: Response, next: NextFunction) => {
     // user.dateOfBirth = dateOfBirth;
     // user.phone = phone;
     // user.isAdmin = isAdmin;
-    user.createdAt = new Date()
-    user.updatedAt = new Date()
+    user.createdAt = new Date();
+    user.updatedAt = new Date();
 
     try {
       await user.save();
@@ -78,42 +78,49 @@ const signIn = async (req, res, next) => {
   // res.status(200).json({ success: "hi" });
 };
 
-const refreshTokenController = (req: Request, res: Response, next: NextFunction) => {
-  const refreshToken = req.body.token;
+// const refreshTokenController = (
+//   req: Request,
+//   res: Response,
+//   next: NextFunction
+// ) => {
+//   const refreshToken = req.body.token;
 
-  const user: JwtPayload = jwt.verify(refreshToken, process.env.REFRESH_TOKEN_SECRET) ?? req.auth;
+//   const user = jwt.verify(refreshToken, process.env.REFRESH_TOKEN_SECRET);
+//   if (user instanceof String) {
+//     return;
+//   } else {
+//     const token = jwt.sign(
+//       {
+//         email: user.email,
+//         userId: user.userId,
+//         isAdmin: user.isAdmin,
+//       },
+//       process.env.ACCESS_TOKEN_SECRET,
+//       { expiresIn: "1h" }
+//     );
 
-  const token = jwt.sign(
-    {
-      email: user.email,
-      userId: user.userId,
-      isAdmin: user.isAdmin,
-    },
-    process.env.ACCESS_TOKEN_SECRET,
-    { expiresIn: "1h" }
-  );
+//     const newRefreshToken = jwt.sign(
+//       {
+//         email: user.email,
+//         userId: user.userId,
+//         isAdmin: user.isAdmin,
+//       },
+//       process.env.REFRESH_TOKEN_SECRET,
+//       {
+//         expiresIn: "30d",
+//       }
+//     );
 
-  const newRefreshToken = jwt.sign(
-    {
-      email: user.email,
-      userId: user.userId,
-      isAdmin: user.isAdmin,
-    },
-    process.env.REFRESH_TOKEN_SECRET,
-    {
-      expiresIn: "30d",
-    }
-  );
+//     res.status(200).json({
+//       accessToken: token,
+//       refreshToken: newRefreshToken,
+//       userId: user.userId,
+//     });
+//   }
 
-  res.status(200).json({
-    accessToken: token,
-    refreshToken: newRefreshToken,
-    userId: user.userId,
-  });
+//   console.log(user);
 
-  console.log(user);
-
-  // res.status(200).json({ a: "a" });
-};
+//   // res.status(200).json({ a: "a" });
+// };
 
 export { signUp, signIn };
