@@ -67,7 +67,7 @@ const signIn = async (req, res, next) => {
       return res.status(200).json({
         accessToken: token,
         refreshToken: refreshToken,
-        userId: user.id,
+        user: user,
       });
     } else {
       console.log("not same");
