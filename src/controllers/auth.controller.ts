@@ -3,7 +3,7 @@ import { User } from "../models/auth.model";
 import { ErrorResp, Errors } from "../helpers/error";
 import { signAccessToken, signRefreshToken } from "../utils/jwt.service";
 import bcrypt from "bcryptjs";
-import jwt from "jsonwebtoken";
+import jwt, { JwtPayload } from "jsonwebtoken";
 import dotenv from "dotenv";
 import { NextFunction, Request, Response } from "express";
 dotenv.config();
@@ -76,6 +76,44 @@ const signIn = async (req, res, next) => {
   }
 
   // res.status(200).json({ success: "hi" });
+};
+
+const refreshTokenController = (req: Request, res: Response, next: NextFunction) => {
+  const refreshToken = req.body.token;
+
+  const user: JwtPayload = jwt.verify(refreshToken, process.env.REFRESH_TOKEN_SECRET) ?? req.auth;
+
+  const token = jwt.sign(
+    {
+      email: user.email,
+      userId: user.userId,
+      isAdmin: user.isAdmin,
+    },
+    process.env.ACCESS_TOKEN_SECRET,
+    { expiresIn: "1h" }
+  );
+
+  const newRefreshToken = jwt.sign(
+    {
+      email: user.email,
+      userId: user.userId,
+      isAdmin: user.isAdmin,
+    },
+    process.env.REFRESH_TOKEN_SECRET,
+    {
+      expiresIn: "30d",
+    }
+  );
+
+  res.status(200).json({
+    accessToken: token,
+    refreshToken: newRefreshToken,
+    userId: user.userId,
+  });
+
+  console.log(user);
+
+  // res.status(200).json({ a: "a" });
 };
 
 export { signUp, signIn };
