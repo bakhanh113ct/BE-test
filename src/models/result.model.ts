@@ -9,6 +9,7 @@ import {
 import { User } from "./auth.model";
 import { Test } from "./test.model";
 import { ResultDetail } from "./resultDetail.model";
+import { ResultPart } from "./resultPart.model";
 
 @Entity()
 export class Result extends BaseEntity {
@@ -20,6 +21,15 @@ export class Result extends BaseEntity {
 
   @Column()
   score: string;
+
+  @Column({ nullable: true })
+  readingCorrectCount: number;
+
+  @Column({ nullable: true })
+  listeningCorrectCount: number;
+
+  @Column({ nullable: true })
+  correctCount: number;
 
   @Column()
   time: string;
@@ -41,4 +51,7 @@ export class Result extends BaseEntity {
 
   @OneToMany((type) => ResultDetail, (test) => test.result)
   resultDetails: ResultDetail[];
+
+  @OneToMany((type) => ResultPart, (test) => test.result)
+  resultParts: ResultDetail[];
 }

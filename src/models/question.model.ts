@@ -15,8 +15,8 @@ export class Question extends BaseEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column()
-  index: string;
+  @Column({nullable: true})
+  index: number;
 
   @Column()
   question: string;

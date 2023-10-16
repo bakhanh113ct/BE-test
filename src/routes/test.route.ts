@@ -6,6 +6,8 @@ import {
   getPartSolutionsById,
   submitTest,
   getAllTest,
+  getTestResults,
+  getDetailResult,
 } from "../controllers/test.controller";
 
 const testRoute: Router = express.Router();
@@ -18,5 +20,7 @@ testRoute.get(
   getPartSolutionsById
 );
 testRoute.post("/:testId/finish", verifyAccessToken, submitTest);
+testRoute.get("/:testId/results", verifyAccessToken, getTestResults);
+testRoute.get('/:testId/results/:resultId', verifyAccessToken, getDetailResult)
 
 export default testRoute;

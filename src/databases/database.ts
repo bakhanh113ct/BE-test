@@ -9,6 +9,7 @@ import { PartDetail } from "../models/partDetail.model";
 import { Question } from "../models/question.model";
 import { ResultDetail } from "../models/resultDetail.model";
 import { config } from "dotenv";
+import { ResultPart } from "../models/resultPart.model";
 
 config();
 
@@ -19,7 +20,7 @@ export const AppDataSource = new DataSource({
   username: process.env.DATABASE_USERNAME,
   password: process.env.DATABASE_PASSWORD,
   database: process.env.DATABASE_NAME,
-  synchronize: false,
+  synchronize: true,
   logging: false,
   entities: [
     User,
@@ -30,6 +31,7 @@ export const AppDataSource = new DataSource({
     PartDetail,
     Question,
     ResultDetail,
+    ResultPart,
   ],
   subscribers: [],
   migrations: [],
